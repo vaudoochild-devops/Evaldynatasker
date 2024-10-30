@@ -1,27 +1,28 @@
 body {
     font-family: Arial, sans-serif;
     background-color:  #19012a !important; /* dark purple */
-    color: #fff !important;
+    color: #070000 !important;
 }
 
-
+h1{
+   
+}
 #task-list {
     list-style-type: none;
 }
 
-
 .btn {
     margin: 8px;
-    box-shadow: #6600af 0px 0px 10px 0px;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5); /* Custom shadow */
 }
 
 input, nav {
-    box-shadow: #6600af 0px 0px 10px 0px;
+    box-shadow: #6600af 0px 0px 1px 0px;
 }
 
 .card {
     text-align: center;
-    background-color: #6600af !important; /* dark purple */
-    box-shadow: #6600af 0px 0px 10px 0px;
+    background-color: #ffffff !important; /* dark purple */
+    box-shadow: #6600af1c 1px 4px 1px 0px;
+    border-radius: 0.5rem; /* Tailwind's rounded class equivalent */
 }
-
