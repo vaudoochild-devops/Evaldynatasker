@@ -78,6 +78,20 @@ function loadTasks() {
     displayTasks();
 }
 
+function updateButtonState(item, state) {
+    let button = item.querySelector('button');
+    if (state === 'active') {
+        button.classList.remove('bg-gray-500');
+        button.classList.add('bg-green-500');
+        button.textContent = 'Marquer comme terminé';
+    } else {
+        button.classList.remove('bg-green-500');
+        button.classList.add('bg-gray-500');
+        button.textContent = 'Marquer comme actif';
+    }
+}
+
+
 function displayTasks() {
     const activeTaskList = document.getElementById("active-task-list");
     const completedTaskList = document.getElementById("completed-task-list");
@@ -85,6 +99,33 @@ function displayTasks() {
 
     activeTaskList.innerHTML = "";
     completedTaskList.innerHTML = "";
+
+    new Sortable(activeTaskList, {
+        group: 'listGroup',
+        animation: 150,
+        onAdd: function (evt) {
+            updateButtonState(evt.item, 'active');
+            completed=false;
+            saveTasks();
+        },
+        onRemove: function (evt) {
+            updateButtonState(evt.item, 'completed');
+            completed=true;
+        }
+    });
+
+    new Sortable(completedTaskList, {
+        group: 'listGroup',
+        animation: 150,
+        onAdd: function (evt) {
+            updateButtonState(evt.item, 'completed');
+            completed=true;
+        },
+        onRemove: function (evt) {
+            updateButtonState(evt.item, 'active');
+            completed=false;
+        }
+    });
 
     for (const task of tasks) {
         if (filter.value === "all" ||
