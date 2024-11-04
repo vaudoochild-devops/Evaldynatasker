@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <body>
+    <nav class="bg-light flex justify-center w-full py-4 shadow-lg">
+        <a class="flex items-center" href="#">
+            <img class="h-16 w-auto" src="./ressources/Logo_M5.png" alt="logo"> <!-- Augmenter la taille du logo -->
+        </a>
+    </nav>
+      
+    <div class="container mx-auto mt-10 p-5 bg-white rounded-lg shadow-lg">
+        <h1 class="text-4xl font-bold text-center mb-5">Dynatasker</h1>
+        <form id="task-form" class="mb-5">
+            <input type="text" id="task-title" class="form-control block w-full p-3 border border-gray-300 rounded mt-2" placeholder="Titre de la tâche">
+            <input type="text" id="task-description" class="form-control block w-full p-3 border border-gray-300 rounded mt-2" placeholder="Description">
+            <input type="date" id="task-date" class="form-control block w-full p-3 border border-gray-300 rounded mt-2">
+            <button type="submit" class="btn bg-blue-500 text-white py-2 px-4 rounded mt-2 hover:bg-blue-600">Ajouter</button>
+        </form>
+        <select id="task-filter" class="form-select block w-full p-3 border border-gray-300 rounded mb-5">
+            <option value="all">Toutes</option>
+            <option value="active">Actives</option>
+            <option value="completed">Terminées</option>
+        </select>
+        <button id="sort-by-date" class="btn bg-gray-500 text-white py-2 px-4 rounded mb-5 hover:bg-gray-600">Trier par date</button>
+        <div class="flex flex-wrap -mx-2">
+            <div class="w-full md:w-1/2 px-2 mb-5 js-sortable sortablejs-custom list-group"
+            data-hs-sortable-options='{
+              "animation": 150,
+              "group": "listGroup"
+            }'>
+                <h3 class="text-2xl font-semibold mb-3">Tâches en cours</h3>
+                <div id="active-task-list" class="list-group-item"></div>
+            </div>
+            
+            <div class="w-full md:w-1/2 px-2 mb-5 js-sortable sortablejs-custom list-group"
+            data-hs-sortable-options='{
+              "animation": 150,
+              "group": "listGroup"
+            }'>
+                <h3 class="text-2xl font-semibold mb-3">Tâches terminées</h3>
+                <div id="completed-task-list" class="list-group-item"></div>
+            </div>
+        </div>
+        <div id="pagination" class="pagination"></div>
+
+    </div>
+    
+    <script src=test.js></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+    
+  </body>
+</html>

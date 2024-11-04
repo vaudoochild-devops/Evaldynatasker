@@ -1,14 +1,16 @@
 class Task {
     constructor(title, description, date) {
+        this.id = Date.now();
         this.title = title;
         this.description = description;
         this.date = date;
         this.completed = false;
     }
-
+    
     createCard() {
         const card = document.createElement("div");
         card.classList.add("card", "mb-3");
+        card.dataset.id = this.id;
 
         const cardBody = document.createElement("div");
         cardBody.classList.add("card-body");
@@ -85,7 +87,7 @@ function updateButtonState(item, state) {
         button.classList.add('bg-green-500');
         button.textContent = 'Marquer comme terminé';
     } else {
-        button.classList.remove('bg-green-500');
+        button.classList.remove('bg-custom-orange');
         button.classList.add('bg-gray-500');
         button.textContent = 'Marquer comme actif';
     }
@@ -99,33 +101,6 @@ function displayTasks() {
 
     activeTaskList.innerHTML = "";
     completedTaskList.innerHTML = "";
-
-    new Sortable(activeTaskList, {
-        group: 'listGroup',
-        animation: 150,
-        onAdd: function (evt) {
-            updateButtonState(evt.item, 'active');
-            completed=false;
-            saveTasks();
-        },
-        onRemove: function (evt) {
-            updateButtonState(evt.item, 'completed');
-            completed=true;
-        }
-    });
-
-    new Sortable(completedTaskList, {
-        group: 'listGroup',
-        animation: 150,
-        onAdd: function (evt) {
-            updateButtonState(evt.item, 'completed');
-            completed=true;
-        },
-        onRemove: function (evt) {
-            updateButtonState(evt.item, 'active');
-            completed=false;
-        }
-    });
 
     for (const task of tasks) {
         if (filter.value === "all" ||
@@ -141,6 +116,56 @@ function displayTasks() {
             }
         }
     }
+
+    new Sortable(activeTaskList, {
+        group: 'listGroup',
+        animation: 150,
+        onAdd: function (evt) {
+            const taskId = evt.item.dataset.id;
+            const task = tasks.find(t => t.id == taskId);
+            console.log('Task added to active list:', task);
+            if (task) {
+                task.completed = false;
+                updateButtonState(evt.item, 'active');
+                saveTasks();
+            }
+        },
+        onRemove: function (evt) {
+            const taskId = evt.item.dataset.id;
+            const task = tasks.find(t => t.id == taskId);
+            console.log('Task removed from active list:', task);
+            if (task) {
+                task.completed = true;
+                updateButtonState(evt.item, 'completed');
+                saveTasks();
+            }
+        }
+    });
+
+    new Sortable(completedTaskList, {
+        group: 'listGroup',
+        animation: 150,
+        onAdd: function (evt) {
+            const taskId = evt.item.dataset.id;
+            const task = tasks.find(t => t.id == taskId);
+            console.log('Task added to completed list:', task);
+            if (task) {
+                task.completed = true;
+                updateButtonState(evt.item, 'completed');
+                saveTasks();
+            }
+        },
+        onRemove: function (evt) {
+            const taskId = evt.item.dataset.id;
+            const task = tasks.find(t => t.id == taskId);
+            console.log('Task removed from completed list:', task);
+            if (task) {
+                task.completed = false;
+                updateButtonState(evt.item, 'active');
+                saveTasks();
+            }
+        }
+    });
 }
 
 document.addEventListener("DOMContentLoaded", () => {
