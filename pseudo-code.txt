@@ -1,0 +1,154 @@
+PSEUDO-CODE - GESTIONNAIRE DE TÂCHES
+=====================================
+
+CLASSE Task
+-----------
+PROPRIÉTÉS:
+- id: identifiant unique (timestamp)
+- title: titre de la tâche
+- description: description de la tâche
+- date: date d'échéance
+- completed: booléen indiquant si la tâche est terminée
+
+CONSTRUCTEUR(title, description, date):
+    AFFECTER id = timestamp actuel
+    AFFECTER title = paramètre title
+    AFFECTER description = paramètre description
+    AFFECTER date = paramètre date
+    AFFECTER completed = false
+
+MÉTHODE createCard():
+    CRÉER élément div (card)
+    AJOUTER classes CSS à card
+    DÉFINIR attribut data-id = this.id
+    
+    CRÉER élément div (cardBody)
+    CRÉER élément h3 (cardTitle) avec this.title
+    CRÉER élément p (cardDescription) avec this.description
+    CRÉER élément p (cardDate) avec this.date
+    
+    CRÉER bouton (completeBtn):
+        SI this.completed ALORS
+            texte = "Marquer comme active"
+            couleur = gris
+        SINON
+            texte = "Marquer comme terminée"
+            couleur = vert
+        FIN SI
+    
+    CRÉER bouton (deleteBtn):
+        texte = "Supprimer"
+        couleur = rouge
+    
+    AJOUTER écouteur d'événement sur completeBtn:
+        INVERSER this.completed
+        APPELER saveTasks()
+        APPELER displayTasks()
+    
+    AJOUTER écouteur d'événement sur deleteBtn:
+        TROUVER index de cette tâche dans le tableau tasks
+        SUPPRIMER cette tâche du tableau
+        APPELER saveTasks()
+        APPELER displayTasks()
+    
+    ASSEMBLER tous les éléments dans card
+    RETOURNER card
+
+VARIABLES GLOBALES
+------------------
+tasks: tableau vide pour stocker toutes les tâches
+
+FONCTIONS PRINCIPALES
+--------------------
+
+FONCTION saveTasks():
+    CONVERTIR le tableau tasks en JSON
+    SAUVEGARDER dans localStorage avec la clé 'tasks'
+
+FONCTION loadTasks():
+    RÉCUPÉRER les données de localStorage avec la clé 'tasks'
+    SI des données existent ALORS
+        PARSER le JSON en tableau
+        POUR chaque taskData dans le tableau:
+            CRÉER nouvelle Task avec les propriétés de taskData
+            RESTAURER l'état completed
+            AJOUTER la tâche au tableau tasks
+        FIN POUR
+    FIN SI
+    APPELER displayTasks()
+
+FONCTION updateButtonState(item, state):
+    TROUVER le bouton dans l'élément item
+    SI state = 'active' ALORS
+        CHANGER couleur vers vert
+        CHANGER texte vers "Marquer comme terminé"
+    SINON
+        CHANGER couleur vers gris
+        CHANGER texte vers "Marquer comme actif"
+    FIN SI
+
+FONCTION displayTasks():
+    RÉCUPÉRER les éléments DOM:
+        - activeTaskList (liste des tâches actives)
+        - completedTaskList (liste des tâches terminées)
+        - filter (filtre de sélection)
+    
+    VIDER le contenu des deux listes
+    
+    POUR chaque task dans tasks:
+        SI le filtre correspond (all, active, ou completed) ALORS
+            CRÉER card = task.createCard()
+            
+            SI task.completed ALORS
+                AJOUTER card à completedTaskList
+            SINON
+                AJOUTER card à activeTaskList
+            FIN SI
+        FIN SI
+    FIN POUR
+    
+    CONFIGURER Sortable pour activeTaskList:
+        - Permettre le glisser-déposer entre listes
+        - onAdd: marquer la tâche comme active
+        - onRemove: marquer la tâche comme terminée
+    
+    CONFIGURER Sortable pour completedTaskList:
+        - Permettre le glisser-déposer entre listes
+        - onAdd: marquer la tâche comme terminée
+        - onRemove: marquer la tâche comme active
+
+INITIALISATION AU CHARGEMENT DE LA PAGE
+---------------------------------------
+
+QUAND le document est prêt:
+    RÉCUPÉRER les éléments du formulaire et boutons
+    
+    APPELER loadTasks() pour charger les tâches sauvegardées
+    
+    AJOUTER écouteur sur soumission du formulaire:
+        EMPÊCHER soumission par défaut
+        RÉCUPÉRER les valeurs des champs (title, description, date)
+        CRÉER nouvelle Task avec ces valeurs
+        AJOUTER la tâche au tableau tasks
+        APPELER saveTasks()
+        APPELER displayTasks()
+        RÉINITIALISER le formulaire
+    
+    AJOUTER écouteur sur changement de filtre:
+        APPELER displayTasks()
+    
+    AJOUTER écouteur sur bouton de tri par date:
+        TRIER le tableau tasks par date croissante
+        APPELER displayTasks()
+
+FONCTIONNALITÉS PRINCIPALES
+---------------------------
+1. Création de tâches avec titre, description et date d'échéance
+2. Affichage des tâches actives et terminées dans des listes séparées
+3. Marquage des tâches comme terminées/actives via boutons
+4. Suppression des tâches
+5. Glisser-déposer entre les listes actives et terminées
+6. Filtrage des tâches (toutes, actives, terminées)
+7. Tri des tâches par date d'échéance
+8. Sauvegarde persistante dans localStorage
+9. Interface responsive avec Tailwind CSS

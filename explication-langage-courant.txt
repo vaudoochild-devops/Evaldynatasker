@@ -1,0 +1,99 @@
+EXPLICATION EN LANGAGE COURANT - GESTIONNAIRE DE TÂCHES
+=====================================================
+
+QU'EST-CE QUE C'EST ?
+--------------------
+Ce programme est une application web de gestion de tâches, comme une liste de "choses à faire" numérique. 
+L'utilisateur peut créer des tâches, les organiser, les marquer comme terminées, et même les faire glisser 
+d'une liste à l'autre.
+
+COMMENT ÇA FONCTIONNE ?
+-----------------------
+
+1. CRÉATION D'UNE TÂCHE
+   Quand quelqu'un veut ajouter une nouvelle tâche :
+   - Il remplit un formulaire avec le titre, une description et une date limite
+   - Le programme crée automatiquement une "carte" visuelle pour cette tâche
+   - Chaque tâche reçoit un numéro unique (basé sur l'heure de création)
+   - Par défaut, toute nouvelle tâche est considérée comme "active" (pas encore faite)
+
+2. AFFICHAGE DES TÂCHES
+   L'écran est divisé en deux colonnes :
+   - À gauche : les tâches actives (celles qu'il reste à faire)
+   - À droite : les tâches terminées (celles qui sont finies)
+   
+   Chaque tâche apparaît comme une carte qui contient :
+   - Le titre en gros et en majuscules
+   - La description
+   - La date limite
+   - Un bouton vert "Marquer comme terminée" (ou gris si déjà terminée)
+   - Un bouton rouge "Supprimer"
+
+3. MARQUER UNE TÂCHE COMME TERMINÉE
+   Quand on clique sur le bouton vert :
+   - La tâche passe automatiquement dans la colonne "terminées"
+   - Le bouton devient gris et le texte change pour "Marquer comme active"
+   - Si on reclique dessus, la tâche redevient active
+
+4. GLISSER-DÉPOSER
+   L'utilisateur peut aussi :
+   - Prendre une tâche avec la souris
+   - La faire glisser de la colonne "actives" vers "terminées" (ou vice versa)
+   - Le statut de la tâche change automatiquement selon la colonne où elle atterrit
+
+5. SUPPRIMER UNE TÂCHE
+   Le bouton rouge permet de supprimer définitivement une tâche
+   - Elle disparaît complètement de l'application
+   - Cette action ne peut pas être annulée
+
+6. FILTRER LES TÂCHES
+   Un menu déroulant permet de choisir ce qu'on veut voir :
+   - "Toutes" : affiche toutes les tâches (actives et terminées)
+   - "Actives" : montre seulement les tâches à faire
+   - "Terminées" : montre seulement les tâches finies
+
+7. TRIER PAR DATE
+   Un bouton permet de réorganiser toutes les tâches par ordre de date limite
+   (les plus urgentes en premier)
+
+8. SAUVEGARDE AUTOMATIQUE
+   Le programme sauvegarde automatiquement tout :
+   - Chaque fois qu'on ajoute, modifie ou supprime une tâche
+   - Les données sont stockées dans le navigateur web
+   - Quand on ferme et rouvre la page, toutes les tâches sont encore là
+
+COMMENT L'UTILISATEUR INTERAGIT AVEC L'APPLICATION ?
+---------------------------------------------------
+
+POUR AJOUTER UNE TÂCHE :
+1. Remplir le titre (obligatoire)
+2. Écrire une description (optionnel)
+3. Choisir une date limite
+4. Cliquer sur "Ajouter" ou appuyer sur Entrée
+
+POUR GÉRER LES TÂCHES :
+- Cliquer sur les boutons verts/gris pour changer le statut
+- Faire glisser les cartes entre les colonnes
+- Utiliser le menu de filtrage pour voir certaines tâches seulement
+- Cliquer sur "Trier par date" pour réorganiser par urgence
+- Cliquer sur le bouton rouge pour supprimer définitivement
+
+AVANTAGES DE CETTE APPLICATION :
+-------------------------------
+- Simple à utiliser : interface intuitive avec des boutons clairs
+- Flexible : plusieurs façons de marquer une tâche comme terminée
+- Organisée : séparation visuelle entre tâches actives et terminées
+- Persistante : les données ne se perdent pas quand on ferme le navigateur
+- Interactive : glisser-déposer rend l'utilisation agréable
+- Filtrable : permet de se concentrer sur certaines tâches seulement
+
+RÉSUMÉ SIMPLE :
+--------------
+C'est comme avoir un tableau avec des post-it virtuels qu'on peut :
+- Écrire (créer des tâches)
+- Déplacer (entre "à faire" et "fait")
+- Jeter (supprimer)
+- Trier (par date)
+- Cacher/montrer (filtrer)
+
+Et tout reste sauvegardé automatiquement pour la prochaine fois qu'on ouvre la page !
